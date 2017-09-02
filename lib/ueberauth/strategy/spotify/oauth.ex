@@ -63,11 +63,11 @@ defmodule Ueberauth.Strategy.Spotify.OAuth do
   def get_token(client, params, headers) do
     client
     |> put_header("Accept", "application/json")
-    |> put_header("Authorization", "Basic "<>encode_credentials(client.client_id, client.client_secret))
-    |> OAuth2.Strategy.AuthCode.get_token(params,[])
+    |> put_header("Authorization", "Bearer " <> encode_credentials(client.client_id, client.client_secret))
+    |> OAuth2.Strategy.AuthCode.get_token(params, [])
   end
 
   # Helper functions
 
-  def encode_credentials(client_id, client_secret), do: (client_id <> ":"<>client_secret) |> Base.encode64
+  def encode_credentials(client_id, client_secret), do: (client_id <> ":" <> client_secret) |> Base.encode64
 end
